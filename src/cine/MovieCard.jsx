@@ -4,27 +4,35 @@ import { getImgUrl } from "../utility/cine-utility";
 import Rating from "./Rating";
 import MovieDetailsModal from "./MovieDetailsModal";
 import { MovieContext } from "../context";
+import { toast } from "react-toastify";
 
 export default function MovieCard({ movie }) {
   const [showModal, setShowModal] = useState(false);
   const [selectedMovie, setSelectedMovie] = useState(null);
 
-  const { cartData, setCartData } = useContext(MovieContext);
+  const { state, dispatch } = useContext(MovieContext);
 
   // handle add to cart
   function handleAddToCart(e, movie) {
     e.stopPropagation();
 
     // find already exist check
-    const foundProduct = cartData.find((item) => {
+    const foundProduct = state.cartData.find((item) => {
       return item.id === movie.id;
     });
 
     // if allready esists
     if (!foundProduct) {
-      setCartData([...cartData, movie]);
+      dispatch({
+        type: "ADD_TO_CART",
+        payload: {
+          ...movie,
+        },
+      });
+
+      toast.success(`Movie ${movie.title} Added Successfull`);
     } else {
-      console.log("Movie Already addded");
+      toast.error(`Movie ${movie.title} Already Added `);
     }
   }
 
@@ -63,14 +71,14 @@ export default function MovieCard({ movie }) {
             <div className="flex items-center space-x-1 mb-5">
               <Rating value={movie.rating} />
             </div>
-            <a
+            <button
               className="bg-[#00d991] rounded-lg py-2 px-5 flex items-center justify-center gap-2 text-[#171923] font-semibold text-sm"
               href="#"
               onClick={(e) => handleAddToCart(e, movie)}
             >
               <img src={tag} alt="" />
               <span>$ {movie.price} | Add to Cart</span>
-            </a>
+            </button>
           </figcaption>
         </a>
       </figure>

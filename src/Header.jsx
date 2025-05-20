@@ -12,7 +12,7 @@ import { MovieContext, ThemeContext } from "./context";
 export default function Header() {
   const [showCart, setShowCart] = useState(false);
 
-  const { cartData } = useContext(MovieContext);
+  const { state } = useContext(MovieContext);
   const { darkMode, setDarkMode } = useContext(ThemeContext);
 
   // handle show cart details
@@ -64,10 +64,10 @@ export default function Header() {
               >
                 <img src={cart} width={24} height={24} alt="" />
               </a>
-              {cartData?.length > 0 && (
+              {state.cartData?.length > 0 && (
                 <span className="cutstom-cart absolute rounded-full left-[28px] leading-6 top-[-12px] text-white text-center p-2 h-[30px] w-[30px] bg-[#12cf6f]">
                   {" "}
-                  {cartData?.length}
+                  {state.cartData?.length}
                 </span>
               )}
             </li>
