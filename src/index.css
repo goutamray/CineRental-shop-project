@@ -1,0 +1,18 @@
+@import "tailwindcss";
+
+header {
+  margin-top: 10px;
+}
+
+.container {
+  padding: 10px 30px;
+}
+.cutstom-cart {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dark {
+  @apply bg-[#171923] text-white;
+}
